@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="author" content="zdz">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    <style>
+        #map {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map">
+        <a href="https://www.maptiler.com" style="position:absolute;left:10px;bottom:10px;z-index:999;">
+            <img src="https://api.maptiler.com/resources/logo.svg" alt="MapTiler logo"></a>
+    </div>
+    <p>
+        <a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a>
+        <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>
+    </p>
+    <script>
+        var map = L.map('map').setView([0, 0], 2);
+        L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}@2x.png?key=jHmRwldTtA3Fbbl7f20d', {
+            tileSize: 512,
+            zoomOffset: -1,
+            minZoom: 1,
+            attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
+            crossOrigin: true
+        }).addTo(map);
+
+
+        {% for host in resp.servers %}
+        {% if host.ip_info.lat is defined %}
+
+        L.marker([{{ host.ip_info.lat }}, {{ host.ip_info.lon }}]).addTo(map).bindPopup(
+            `<pre>
+continent: {{ host.ip_info.continent |e }}
+country: {{ host.ip_info.country |e }}
+region: {{ host.ip_info.region_name |e }}
+city: {{ host.ip_info.city |e }}
+isp: {{ host.ip_info.isp |e }}
+org: {{ host.ip_info.org |e }}
+as: {{ host.ip_info.as |e }}
+asname: {{ host.ip_info.asname |e }}
+ip: {{ host.ip_info.query |e }}
+source: {{ host.ip_info.source |e }}
+name: {{ host.name |e }} - {{ host.alias |e }}
+</pre>`);
+
+        {% endif %}
+        {% endfor %}
+
+    </script>
+</body>
+
+</html>

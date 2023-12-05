@@ -1,0 +1,49 @@
+[package]
+edition = "2021"
+name = "stat_server"
+version = "1.7.2"
+
+rust-version = "1.69"
+
+authors = ["doge <doge.py@gmail.com>"]
+categories = ["monitoring-tools"]
+description = "A simple server monitoring tool"
+keywords = ["devops", "notifications", "monitoring", "dashboard", "alerting"]
+license = "Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/zdz/ServerStatus-Rust"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+chrono = "0.4"
+
+[dependencies]
+anyhow = "1"
+axum = {version = "0.6.18", features = ["headers"]}
+bytes = {version = "1", features = ["serde"]}
+chrono = "0.4"
+clap = {version = "4.3", features = ["derive", "unicode"]}
+futures-util = {version = "0.3", default-features = false}
+hyper = {version = "0.14", features = ["full"]}
+jsonwebtoken = "8.3"
+lazy_static = "1.4"
+lettre = {version = "0.10", default-features = false, features = ["smtp-transport", "pool", "hostname", "builder", "rustls-tls", "tokio1-rustls-tls"]}
+log = "0.4"
+minijinja = {version = "0.33", features = ["source", "json"]}
+once_cell = "1"
+pretty_env_logger = "0.5"
+prettytable-rs = "^0.10"
+prost = "0.11"
+reqwest = {version = "0.11", features = ["json", "rustls-tls"], default-features = false}
+rhai = {version = "1.14", features = ["sync", "metadata", "decimal", "no_function", "no_module", "no_closure", "unchecked"]}
+rust-embed = {version = "6.6", features = ["mime-guess"]}
+serde = {version = "1.0", default-features = false, features = ["derive", "alloc"]}
+serde_json = {version = "1.0", default-features = false, features = ["alloc"]}
+stat_common = {path = "../common"}
+tokio = {version = "1", features = ["full"]}
+toml = "0.7"
+tonic = {version = "0.9", features = ["tls"]}
+tower-http = { version = "0.4.0", features = ["cors"] }
+url = "2.3.1"
+uuid = {version = "1.3", default-features = false, features = ["serde", "v4"]}

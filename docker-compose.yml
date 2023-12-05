@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  stat_server:
+    image: idoge/stat_server:latest
+    container_name: stat_server
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./config.toml:/config.toml
+      - ./stats.json:/stats.json
+    ports:
+      - 8080:8080
+      - 9394:9394
+
